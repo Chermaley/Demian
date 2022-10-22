@@ -22,7 +22,7 @@ namespace Demian.CodeAnalysis.Syntax
             } while (token.Kind != SyntaxKind.EndOfFileToken);
 
             _tokens = tokens.ToArray();
-            _diagnostics.AddRange(lexer.Diagnostic);
+            _diagnostics.AddRange(lexer.Diagnostics);
         }
 
         public IEnumerable<Diagnostic> Diagnostics => _diagnostics;
@@ -78,7 +78,7 @@ namespace Demian.CodeAnalysis.Syntax
             {
                 var operatorToken = NextToken();
                 var operand = ParseBinaryExpression(unaryOperatorPrecedence);
-                left = new UnaryExpressionsSyntax(operatorToken, operand);
+                left = new UnaryExpressionSyntax(operatorToken, operand);
             }
             else
             {

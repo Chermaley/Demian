@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mc", "mc\mc.csproj", "{F5CE
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demian", "Demian\Demian.csproj", "{D6D9FE66-DD93-44E2-B40A-EABAD0B8CEA8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demian.Tests", "Demian.Tests\Demian.Tests.csproj", "{5F134589-6D1A-4EFA-9F7D-F42866642FF3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{D6D9FE66-DD93-44E2-B40A-EABAD0B8CEA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6D9FE66-DD93-44E2-B40A-EABAD0B8CEA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6D9FE66-DD93-44E2-B40A-EABAD0B8CEA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F134589-6D1A-4EFA-9F7D-F42866642FF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F134589-6D1A-4EFA-9F7D-F42866642FF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F134589-6D1A-4EFA-9F7D-F42866642FF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F134589-6D1A-4EFA-9F7D-F42866642FF3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

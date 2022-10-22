@@ -1,20 +1,18 @@
 namespace Demian.CodeAnalysis.Syntax;
-public sealed class UnaryExpressionsSyntax : ExpressionSyntax
+public sealed class UnaryExpressionSyntax : ExpressionSyntax
 {
-    public SyntaxToken OperatorToken { get; }
-    public ExpressionSyntax Operand { get; }
-
-    public UnaryExpressionsSyntax(SyntaxToken operatorToken, ExpressionSyntax operand)
+    public UnaryExpressionSyntax(SyntaxToken operatorToken, ExpressionSyntax operand)
     {
         OperatorToken = operatorToken;
         Operand = operand;
     }
-        
+    public SyntaxToken OperatorToken { get; }
+    public ExpressionSyntax Operand { get; }
     public override SyntaxKind Kind => SyntaxKind.UnaryExpression;
         
     public override IEnumerable<SyntaxNode> GetChildren()
     {
-        yield return Operand;
         yield return OperatorToken;
+        yield return Operand;
     }
 }

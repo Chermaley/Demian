@@ -23,7 +23,7 @@ namespace Demian.CodeAnalysis.Binding
                 case SyntaxKind.LiteralExpression:
                     return BindLiteralExpression((LiteralExpressionSyntax)syntax);
                 case SyntaxKind.UnaryExpression:
-                    return BindUnaryExpression((UnaryExpressionsSyntax)syntax);
+                    return BindUnaryExpression((UnaryExpressionSyntax)syntax);
                 case SyntaxKind.BinaryExpression:
                     return BindBinaryExpression((BinaryExpressionsSyntax)syntax);
                 case SyntaxKind.AssigmentExpression:
@@ -67,7 +67,7 @@ namespace Demian.CodeAnalysis.Binding
             var value = syntax.Value ?? 0;
             return new BoundLiteralExpression(value);
         }
-        private BoundExpression BindUnaryExpression(UnaryExpressionsSyntax syntax)
+        private BoundExpression BindUnaryExpression(UnaryExpressionSyntax syntax)
         {
             var boundOperand = BindExpression(syntax.Operand);
             var boundOperator = BoundUnaryOperator.Bind(syntax.OperatorToken.Kind, boundOperand.Type);
