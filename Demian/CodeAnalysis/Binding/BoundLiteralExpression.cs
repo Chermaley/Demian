@@ -9,6 +9,6 @@ internal sealed class BoundLiteralExpression : BoundExpression
         Value = value;
     }
 
+    public override BoundNodeKind Kind => BoundNodeKind.LiteralExpression;
     public override Type Type => Value.GetType();
-    public override BoundNodeKind Kind { get; }
 }
