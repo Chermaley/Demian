@@ -16,9 +16,5 @@ namespace Demian.CodeAnalysis.Syntax
             Value = value;
         }
         
-        public override IEnumerable<SyntaxNode> GetChildren()
-        {
-            return Enumerable.Empty<SyntaxNode>();
-        }
     }
 }
