@@ -1,4 +1,4 @@
-namespace Demian.CodeAnalysis;
+namespace Demian.CodeAnalysis.Text;
 
 public struct TextSpan
 {
@@ -17,4 +17,6 @@ public struct TextSpan
         var length = end - start;
         return new TextSpan(start, length);
     }
+    
+    
 }

@@ -1,3 +1,5 @@
+using Demian.CodeAnalysis.Text;
+
 namespace Demian.CodeAnalysis.Syntax
 {
     public sealed class SyntaxToken : SyntaxNode
@@ -6,7 +8,7 @@ namespace Demian.CodeAnalysis.Syntax
         public int Position { get; }
         public string Text { get; }
         public object Value { get; }
-        public override TextSpan Span => new(Position, Text.Length); 
+        public override TextSpan Span => new(Position, Text?.Length ?? 0); 
 
         public  SyntaxToken(SyntaxKind kind, int position, string text, object value)
         {

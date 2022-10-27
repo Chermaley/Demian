@@ -1,5 +1,6 @@
 using System.Collections;
 using Demian.CodeAnalysis.Syntax;
+using Demian.CodeAnalysis.Text;
 
 namespace Demian.CodeAnalysis;
 

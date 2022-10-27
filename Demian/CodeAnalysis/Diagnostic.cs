@@ -1,3 +1,5 @@
+using Demian.CodeAnalysis.Text;
+
 namespace Demian.CodeAnalysis;
 
 public sealed class Diagnostic

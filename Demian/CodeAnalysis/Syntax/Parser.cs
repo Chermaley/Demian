@@ -1,15 +1,18 @@
 using System.Collections.Immutable;
+using Demian.CodeAnalysis.Text;
 
 namespace Demian.CodeAnalysis.Syntax
 {
     internal sealed class Parser
     {
+        private readonly SourceText _text;
         private readonly DiagnosticBag _diagnostics = new();
         private readonly ImmutableArray<SyntaxToken> _tokens;
         
         private int _position;
-        public Parser(string text)
+        public Parser(SourceText text)
         {
+            _text = text;
             var tokens = new List<SyntaxToken>();
             var lexer = new Lexer(text);
             SyntaxToken token;
@@ -54,7 +57,7 @@ namespace Demian.CodeAnalysis.Syntax
         {
             var expression = ParseExpression();
             var endOfFileToken = MatchToken(SyntaxKind.EndOfFileToken);
-            return new SyntaxTree(_diagnostics.ToImmutableArray(), expression, endOfFileToken);
+            return new SyntaxTree(_text, _diagnostics.ToImmutableArray(), expression, endOfFileToken);
         }
         private ExpressionSyntax ParseExpression()
         {
