@@ -57,4 +57,10 @@ public sealed class DiagnosticBag: IEnumerable<Diagnostic>
         var message = $"Variable '{name}' doesn`t exist.";
         Report(span, message);    
     }
+    
+    public void ReportVariableCannotConvert(TextSpan span, Type actualType, Type expectedType)
+    {
+        var message = $"Variable type '{expectedType}' is not assignable to {actualType}.";
+        Report(span, message); 
+    }
 }

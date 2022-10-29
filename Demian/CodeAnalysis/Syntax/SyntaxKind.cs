@@ -31,4 +31,7 @@ public enum SyntaxKind
     // Keywords
     TrueKeyword,
     FalseKeyword,
+    
+    //Nodes 
+    CompilationUnit
 } 

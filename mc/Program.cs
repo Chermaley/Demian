@@ -10,16 +10,21 @@ namespace Compiller
     {
         private static void Main()
         {
-            var showTree = false;
             var variables = new Dictionary<VariableSymbol, object>();
+            var showTree = false;
             var textBuilder = new StringBuilder();
+            Compilation previous = null;
             
             while (true)
             {
+                Console.ForegroundColor = ConsoleColor.Green;
+                
                 if (textBuilder.Length == 0)
                     Console.Write("> ");
                 else
                     Console.Write("| ");
+
+                Console.ResetColor();
 
                 var input = Console.ReadLine();
                 var isBlank = string.IsNullOrWhiteSpace(input);
@@ -40,6 +45,12 @@ namespace Compiller
                         Console.Clear();
                         continue;
                     }
+                    
+                    if (input == "#reset")
+                    {
+                        previous = null;
+                        continue;
+                    }
                 }
 
                 textBuilder.AppendLine(input);
@@ -52,9 +63,9 @@ namespace Compiller
                     continue;
                 }
                 
-                var compilation = new Compilation(syntaxTree);
-                var result = compilation.Evaluate(variables);
+                var compilation = previous == null ? new Compilation(syntaxTree) : previous.ContinueWith(syntaxTree);
                 
+                var result = compilation.Evaluate(variables);
                 
                 if (showTree)
                 {
@@ -105,6 +116,8 @@ namespace Compiller
                 else
                 {
                     Console.WriteLine(result.Value);
+
+                    previous = compilation;
                 }
 
                 textBuilder.Clear();
