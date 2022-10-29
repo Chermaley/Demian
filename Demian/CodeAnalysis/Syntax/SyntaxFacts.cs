@@ -100,7 +100,11 @@ public static class SyntaxFacts
             case SyntaxKind.OpenParenthesisToken:
                 return "(";
             case SyntaxKind.CloseParenthesisToken:
-                return ")";
+                return ")"; 
+            case SyntaxKind.OpenBraceToken:
+                return "{";
+            case SyntaxKind.CloseBraceToken:
+                return "}";
             case SyntaxKind.FalseKeyword:
                 return "false";
             case SyntaxKind.TrueKeyword:

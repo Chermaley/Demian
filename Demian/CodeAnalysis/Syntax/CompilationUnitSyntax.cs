@@ -2,12 +2,12 @@ namespace Demian.CodeAnalysis.Syntax;
 
 public sealed class CompilationUnitSyntax : SyntaxNode
 {
-    public CompilationUnitSyntax(ExpressionSyntax expression, SyntaxNode endOfFileToken)
+    public CompilationUnitSyntax(StatementSyntax statement, SyntaxNode endOfFileToken)
     {
-        Expression = expression;
+        Statement = statement;
         EndOfFileToken = endOfFileToken;
     }
-    public ExpressionSyntax Expression { get; }
+    public StatementSyntax Statement { get; }
     public SyntaxNode EndOfFileToken { get; }
     public override SyntaxKind Kind => SyntaxKind.CompilationUnit;
 }

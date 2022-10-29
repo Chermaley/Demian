@@ -10,6 +10,8 @@ public enum SyntaxKind
     SlashToken,
     OpenParenthesisToken,
     CloseParenthesisToken,
+    OpenBraceToken,
+    CloseBraceToken,
     BadToken,
     EndOfFileToken,
     IdentifierToken,
@@ -33,5 +35,9 @@ public enum SyntaxKind
     FalseKeyword,
     
     //Nodes 
-    CompilationUnit
+    CompilationUnit,
+    
+    //Statements 
+    BlockStatement,
+    ExpressionStatement,
 } 

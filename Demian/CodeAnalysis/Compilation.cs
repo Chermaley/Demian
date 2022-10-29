@@ -43,7 +43,7 @@ public sealed class Compilation
         {
             return new EvaluationResult(diagnostics.ToImmutableArray(), null);
         }
-        var evaluator = new Evaluator(GlobalScope.Expression, variables);
+        var evaluator = new Evaluator(GlobalScope.Statement, variables);
         var value = evaluator.Evaluate();
         return new EvaluationResult(ImmutableArray<Diagnostic>.Empty, value);
     }

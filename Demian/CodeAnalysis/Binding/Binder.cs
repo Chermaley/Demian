@@ -15,7 +15,7 @@ namespace Demian.CodeAnalysis.Binding
         {
             var parentScope = CreateParentScopes(previous);
             var binder = new Binder(parentScope);
-            var expression = binder.BindExpression(syntax.Expression);
+            var expression = binder.BindStatement(syntax.Statement);
             var variables = binder._scope.GetDeclaredVariables();
             var diagnostics = binder.Diagnostics.ToImmutableArray();
 
@@ -47,7 +47,36 @@ namespace Demian.CodeAnalysis.Binding
             return parent;
         }
         public DiagnosticBag Diagnostics => _diagnostics;
-        public BoundExpression BindExpression(ExpressionSyntax syntax)
+        private BoundStatement BindStatement(StatementSyntax syntax)
+        {
+            switch (syntax.Kind) 
+            { 
+                case SyntaxKind.BlockStatement:
+                    return BindBlockStatement((BlockStatementSyntax)syntax);
+                case SyntaxKind.ExpressionStatement:
+                    return BindExpressionStatement((ExpressionStatementSyntax)syntax);
+                default:
+                    throw new Exception($"Unexpected syntax {syntax.Kind}");
+            }
+        }
+        private BoundStatement BindBlockStatement(BlockStatementSyntax syntax)
+        {
+            var statements = ImmutableArray.CreateBuilder<BoundStatement>();
+            foreach (var statementSyntax in syntax.Statements)
+            {
+                var statement = BindStatement(statementSyntax);
+                statements.Add(statement);
+            }
+            return new BoundBlockStatement(statements.ToImmutable());
+        }
+        private BoundStatement BindExpressionStatement(ExpressionStatementSyntax syntax)
+        {
+            var expression = BindExpression(syntax.Expression);
+
+            return new BoundExpressionStatement(expression);
+        }
+
+        private BoundExpression BindExpression(ExpressionSyntax syntax)
         {
             switch (syntax.Kind) 
             { 

@@ -68,12 +68,19 @@ namespace Demian.CodeAnalysis.Syntax
                     _kind = SyntaxKind.CloseParenthesisToken;
                     _position++;
                     break;
+                case '{':
+                    _kind = SyntaxKind.OpenBraceToken;
+                    _position++;
+                    break;
+                case '}':
+                    _kind = SyntaxKind.CloseBraceToken;
+                    _position++;
+                    break;
                 case '&':
                     if (Lookahead == '&')
                     {
                         _kind = SyntaxKind.AmpersandAmpersandToken;
                         _position += 2;
-                        break;
                     }
                     break;
                 case '|':
@@ -81,7 +88,6 @@ namespace Demian.CodeAnalysis.Syntax
                     {
                         _kind = SyntaxKind.PipePipeToken;
                         _position += 2;
-                        break;
                     }
                     break;
                 case '=':
