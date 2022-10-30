@@ -5,6 +5,7 @@ public enum BoundNodeKind
     //Statements
     BlockStatement,
     ExpressionStatement,
+    VariableDeclaration,
     //Expressions
     UnaryExpression,
     LiteralExpression,

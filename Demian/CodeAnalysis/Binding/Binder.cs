@@ -54,7 +54,9 @@ namespace Demian.CodeAnalysis.Binding
                 case SyntaxKind.BlockStatement:
                     return BindBlockStatement((BlockStatementSyntax)syntax);
                 case SyntaxKind.ExpressionStatement:
-                    return BindExpressionStatement((ExpressionStatementSyntax)syntax);
+                    return BindExpressionStatement((ExpressionStatementSyntax)syntax);             
+                case SyntaxKind.VariableDeclaration:
+                    return BindVariableDeclaration((VariableDeclarationSyntax)syntax);
                 default:
                     throw new Exception($"Unexpected syntax {syntax.Kind}");
             }
@@ -62,11 +64,15 @@ namespace Demian.CodeAnalysis.Binding
         private BoundStatement BindBlockStatement(BlockStatementSyntax syntax)
         {
             var statements = ImmutableArray.CreateBuilder<BoundStatement>();
+            _scope = new BoundScope(_scope);
+            
             foreach (var statementSyntax in syntax.Statements)
             {
                 var statement = BindStatement(statementSyntax);
                 statements.Add(statement);
             }
+
+            _scope = _scope.Parent;
             return new BoundBlockStatement(statements.ToImmutable());
         }
         private BoundStatement BindExpressionStatement(ExpressionStatementSyntax syntax)
@@ -75,7 +81,18 @@ namespace Demian.CodeAnalysis.Binding
 
             return new BoundExpressionStatement(expression);
         }
-
+        private BoundStatement BindVariableDeclaration(VariableDeclarationSyntax syntax)
+        {
+            var name = syntax.Identifier.Text;
+            var expression = BindExpression(syntax.Initializer);
+            var isReadOnly = syntax.Keyword.Kind == SyntaxKind.LetKeyword;
+            var variable = new VariableSymbol(name, isReadOnly, expression.Type);
+            
+            if (!_scope.TryDeclare(variable))
+                _diagnostics.ReportVariableAlreadyDeclared(syntax.Identifier.Span, name);
+            
+            return new BoundVariableDeclaration(variable, expression);
+        }
         private BoundExpression BindExpression(ExpressionSyntax syntax)
         {
             switch (syntax.Kind) 
@@ -117,8 +134,14 @@ namespace Demian.CodeAnalysis.Binding
 
             if (!_scope.TryLookup(name, out var variable))
             {
-                variable = new VariableSymbol(name, boundExpression.Type);
-                _scope.TryDeclare(variable);
+                _diagnostics.ReportUndefinedName(syntax.IdentifierToken.Span, name);
+                return boundExpression;
+            }
+
+            if (variable.IsReadOnly)
+            {
+                _diagnostics.ReportCannotAssign(syntax.EqualsToken.Span, name);
+                return boundExpression;
             }
 
             if (boundExpression.Type != variable.Type)

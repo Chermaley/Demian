@@ -63,4 +63,16 @@ public sealed class DiagnosticBag: IEnumerable<Diagnostic>
         var message = $"Variable type '{expectedType}' is not assignable to {actualType}.";
         Report(span, message); 
     }
+
+    public void ReportVariableAlreadyDeclared(TextSpan span, string name)
+    {
+        var message = $"Variable '{name}' is already declared.";
+        Report(span, message);
+    }
+
+    public void ReportCannotAssign(TextSpan span, string name)
+    {
+        var message = $"Variable '{name}' is readonly and cannot be assigned to.";
+        Report(span, message);
+    }
 }
