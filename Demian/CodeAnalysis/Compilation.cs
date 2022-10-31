@@ -10,10 +10,7 @@ public sealed class Compilation
     public Compilation Previous { get; }
     public SyntaxTree Syntax { get; }
     public Compilation(SyntaxTree syntaxTree)
-        :this(null, syntaxTree)
-    {
-        Syntax = syntaxTree;
-    }
+        :this(null, syntaxTree) {}
     private Compilation(Compilation previous, SyntaxTree syntax)
     {
         Previous = previous;

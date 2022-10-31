@@ -42,25 +42,25 @@ public sealed class DiagnosticBag: IEnumerable<Diagnostic>
 
     public void ReportUndefinedUnaryOperator(TextSpan span, string operatorText, Type operatorType)
     {
-        var message = $"Unary operator '{operatorText}' is not defined for type {operatorType}";
+        var message = $"Unary operator '{operatorText}' is not defined for type '{operatorType}'.";
         Report(span, message);
     }
 
     public void ReportUndefinedBinaryOperator(TextSpan span, string operatorText, Type leftType, Type rightType)
     {
-        var message = $"Binary operator '{operatorText}' is not defined for types {leftType} and {rightType}";
+        var message = $"Binary operator '{operatorText}' is not defined for types '{leftType}' and '{rightType}'.";
         Report(span, message);
     }
 
     public void ReportUndefinedName(TextSpan span, string name)
     {
-        var message = $"Variable '{name}' doesn`t exist.";
+        var message = $"Variable '{name}' doesn't exist.";
         Report(span, message);    
     }
     
     public void ReportVariableCannotConvert(TextSpan span, Type actualType, Type expectedType)
     {
-        var message = $"Variable type '{expectedType}' is not assignable to {actualType}.";
+        var message = $"Variable type '{actualType}' is not assignable to '{expectedType}'.";
         Report(span, message); 
     }
 
@@ -72,7 +72,7 @@ public sealed class DiagnosticBag: IEnumerable<Diagnostic>
 
     public void ReportCannotAssign(TextSpan span, string name)
     {
-        var message = $"Variable '{name}' is readonly and cannot be assigned to.";
+        var message = $"Variable '{name}' is read-only and cannot be assigned to.";
         Report(span, message);
     }
 }
