@@ -163,8 +163,6 @@ namespace Demian.CodeAnalysis.Syntax
                 case SyntaxKind.IdentifierToken:
                 default:
                     return ParseNameExpression();
-
-                
             }
         }
         private ExpressionSyntax ParseParenthesizedExpression()

@@ -156,6 +156,18 @@ public class LexerTest
         if (t1Kind == SyntaxKind.EqualsToken && t2Kind == SyntaxKind.EqualsEqualsToken)
             return true;
         
+        if (t1Kind == SyntaxKind.LessToken && t2Kind == SyntaxKind.EqualsToken)
+            return true;
+        
+        if (t1Kind == SyntaxKind.LessToken && t2Kind == SyntaxKind.EqualsEqualsToken)
+            return true;
+        
+        if (t1Kind == SyntaxKind.GreaterToken && t2Kind == SyntaxKind.EqualsToken)
+            return true;
+        
+        if (t1Kind == SyntaxKind.GreaterToken && t2Kind == SyntaxKind.EqualsEqualsToken)
+            return true;
+
         return false;
     }
     public static IEnumerable<(SyntaxKind t1Kind, string t1Text, SyntaxKind t2Kind, string t2Text)> GetTokenPairs()

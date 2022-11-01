@@ -21,7 +21,11 @@ public enum SyntaxKind
     EqualsEqualsToken,
     BangEqualsToken,
     EqualsToken,
-
+    LessToken,
+    LessOrEqualsToken,
+    GreaterToken,
+    GreaterOrEqualsToken,
+    
     //Expressions 
     UnaryExpression,
     LiteralExpression,
@@ -43,4 +47,5 @@ public enum SyntaxKind
     BlockStatement,
     ExpressionStatement,
     VariableDeclaration,
+
 } 

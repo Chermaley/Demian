@@ -48,6 +48,10 @@ public static class SyntaxFacts
             
             case SyntaxKind.EqualsEqualsToken:
             case SyntaxKind.BangEqualsToken:
+            case SyntaxKind.LessToken:
+            case SyntaxKind.LessOrEqualsToken:  
+            case SyntaxKind.GreaterToken:
+            case SyntaxKind.GreaterOrEqualsToken:
                 return 3;
             
             case SyntaxKind.AmpersandAmpersandToken:
@@ -101,6 +105,14 @@ public static class SyntaxFacts
                 return "==";
             case SyntaxKind.BangEqualsToken:
                 return "!=";
+            case SyntaxKind.LessToken:
+                return "<";
+            case SyntaxKind.LessOrEqualsToken:
+                return "<=";
+            case SyntaxKind.GreaterToken:
+                return ">";
+            case SyntaxKind.GreaterOrEqualsToken:
+                return ">=";
             case SyntaxKind.OpenParenthesisToken:
                 return "(";
             case SyntaxKind.CloseParenthesisToken:

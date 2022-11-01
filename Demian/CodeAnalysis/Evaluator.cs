@@ -128,7 +128,15 @@ namespace Demian.CodeAnalysis
                 case BoundBinaryOperatorKind.Equals:
                     return Equals(left, right);
                 case BoundBinaryOperatorKind.NotEquals:
-                    return !Equals(left, right);
+                    return !Equals(left, right); 
+                case BoundBinaryOperatorKind.LogicalLess:
+                    return (int)left < (int)right;        
+                case BoundBinaryOperatorKind.LogicalLessOrEquals:
+                    return (int)left <= (int)right;     
+                case BoundBinaryOperatorKind.LogicalGreat:
+                    return (int)left > (int)right;        
+                case BoundBinaryOperatorKind.LogicalGreatOrEquals:
+                    return (int)left >= (int)right;
                 default:
                     throw new Exception($"Unexpected binary operator {b.Op}");
             }
