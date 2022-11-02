@@ -38,6 +38,9 @@ namespace Demian.CodeAnalysis
                 case BoundNodeKind.WhileStatement:
                     EvaluateWhileStatement((BoundWhileStatement)statement);
                     break;
+                case BoundNodeKind.ForStatement:
+                    EvaluateForStatement((BoundForStatement)statement);
+                    break;
                 default:
                     throw new Exception($"Unexpected node {statement.Kind}");
             }
@@ -71,6 +74,16 @@ namespace Demian.CodeAnalysis
             while ((bool)EvaluateExpression(statement.Condition))
             {
                 EvaluateStatement(statement.Statement);
+            }
+        }
+        private void EvaluateForStatement(BoundForStatement statement)
+        {
+            var lowerBound = (int)EvaluateExpression(statement.LowerBound);
+            var upperBound = (int)EvaluateExpression(statement.UpperBound); 
+            for (var i = lowerBound; i <= upperBound; i++)
+            {
+                _variables[statement.Variable] = i;
+                EvaluateStatement(statement.Body);
             }
         }
         private object EvaluateExpression(BoundExpression node)

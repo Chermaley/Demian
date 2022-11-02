@@ -72,6 +72,8 @@ namespace Demian.CodeAnalysis.Syntax
                     return ParseIfStatement();
                 case SyntaxKind.WhileKeyword:
                     return ParseWhileStatement();
+                case SyntaxKind.ForKeyword:
+                    return ParseForStatement();
                 default:
                     return ParseExpressionStatement();
             }
@@ -127,7 +129,18 @@ namespace Demian.CodeAnalysis.Syntax
             var whileKeyword = MatchToken(SyntaxKind.WhileKeyword);
             var condition = ParseExpression();
             var body = ParseStatement();
-            return new WhileStatement(whileKeyword, condition, body);
+            return new WhileStatementSyntax(whileKeyword, condition, body);
+        }
+        private StatementSyntax ParseForStatement()
+        {
+            var forKeyword = MatchToken(SyntaxKind.ForKeyword);
+            var identifier = MatchToken(SyntaxKind.IdentifierToken);
+            var equalsToken = MatchToken(SyntaxKind.EqualsToken);
+            var lowerBound = ParseExpression();
+            var toKeyword = MatchToken(SyntaxKind.ToKeyword);
+            var upperBound = ParseExpression();
+            var body = ParseStatement();
+            return new ForStatementSyntax(forKeyword, identifier, equalsToken, lowerBound,toKeyword, upperBound, body);
         }
         private ExpressionSyntax ParseExpression()
         {

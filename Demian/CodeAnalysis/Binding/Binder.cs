@@ -60,7 +60,9 @@ namespace Demian.CodeAnalysis.Binding
                 case SyntaxKind.IfStatement:
                     return BindIfStatement((IfStatementSyntax)syntax);
                 case SyntaxKind.WhileStatement:
-                    return BindWhileStatement((WhileStatement)syntax);
+                    return BindWhileStatement((WhileStatementSyntax)syntax);
+                case SyntaxKind.ForStatement:
+                    return BindForStatement((ForStatementSyntax)syntax);
                 default:
                     throw new Exception($"Unexpected syntax {syntax.Kind}");
             }
@@ -105,12 +107,30 @@ namespace Demian.CodeAnalysis.Binding
             
             return new BoundIfStatement(condition, thenStatement, elseStatement);
         }
-        private BoundStatement BindWhileStatement(WhileStatement syntax)
+        private BoundStatement BindWhileStatement(WhileStatementSyntax syntax)
         {
             var condition = BindExpression(syntax.Condition, typeof(bool));
-            var statement = BindStatement(syntax.Statement);
+            var body = BindStatement(syntax.Statement);
 
-            return new BoundWhileStatement(condition, statement);
+            return new BoundWhileStatement(condition, body);
+        }
+        private BoundStatement BindForStatement(ForStatementSyntax syntax)
+        {
+            var lowerBound = BindExpression(syntax.LowerBound, typeof(int));
+            var upperBound = BindExpression(syntax.UpperBound, typeof(int));
+            
+            _scope = new BoundScope(_scope);
+
+            var name = syntax.Identifier.Text;
+            var variable = new VariableSymbol(name, true, typeof(int));
+            if (!_scope.TryDeclare(variable))
+                _diagnostics.ReportVariableAlreadyDeclared(syntax.Identifier.Span, name);
+
+            var body = BindStatement(syntax.Body);
+
+            _scope = _scope.Parent;
+
+            return new BoundForStatement(variable, lowerBound, upperBound, body);
         }
         private BoundExpression BindExpression(ExpressionSyntax syntax, Type targetType)
         {
@@ -119,7 +139,6 @@ namespace Demian.CodeAnalysis.Binding
                 _diagnostics.ReportVariableCannotConvert(syntax.Span, result.Type, targetType);
             return result;
         }
-
         private BoundExpression BindExpression(ExpressionSyntax syntax)
         {
             switch (syntax.Kind) 
@@ -208,4 +227,5 @@ namespace Demian.CodeAnalysis.Binding
             return new BoundBinaryExpression(boundLeft, boundOperator, boundRight);
         }
     }
+    
 }

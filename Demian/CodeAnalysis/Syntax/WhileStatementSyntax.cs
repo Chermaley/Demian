@@ -1,8 +1,8 @@
 using Demian.CodeAnalysis.Syntax;
 
-internal class WhileStatement : StatementSyntax
+internal class WhileStatementSyntax : StatementSyntax
 { 
-    public WhileStatement(SyntaxToken whileKeyword, ExpressionSyntax condition, StatementSyntax statement)
+    public WhileStatementSyntax(SyntaxToken whileKeyword, ExpressionSyntax condition, StatementSyntax statement)
     {
         WhileKeyword = whileKeyword;
         Condition = condition;

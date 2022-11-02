@@ -8,7 +8,8 @@ public enum BoundNodeKind
     VariableDeclaration,
     IfStatement,
     WhileStatement,
-
+    ForStatement,
+    
     //Expressions
     UnaryExpression,
     LiteralExpression,
