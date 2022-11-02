@@ -76,6 +76,10 @@ public static class SyntaxFacts
                 return SyntaxKind.LetKeyword; 
             case "var":
                 return SyntaxKind.VarKeyword;
+            case "if":
+                return SyntaxKind.IfKeyword;  
+            case "else":
+                return SyntaxKind.ElseKeyword;
             default:
                 return SyntaxKind.IdentifierToken;
         }
@@ -121,6 +125,10 @@ public static class SyntaxFacts
                 return "{";
             case SyntaxKind.CloseBraceToken:
                 return "}";
+            case SyntaxKind.ElseKeyword:
+                return "else";
+            case SyntaxKind.IfKeyword:
+                return "if";
             case SyntaxKind.FalseKeyword:
                 return "false";
             case SyntaxKind.TrueKeyword:

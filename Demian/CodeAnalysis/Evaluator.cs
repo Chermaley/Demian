@@ -1,6 +1,4 @@
-using System;
-using System.Collections.Generic;
-using Demian.CodeAnalysis.Binding;
+ using Demian.CodeAnalysis.Binding;
 
 namespace Demian.CodeAnalysis
 {
@@ -34,10 +32,14 @@ namespace Demian.CodeAnalysis
                 case BoundNodeKind.VariableDeclaration:
                     EvaluateVariableDeclaration((BoundVariableDeclaration)statement);
                     break;
+                case BoundNodeKind.IfStatement:
+                    EvaluateIfStatement((BoundIfStatement)statement);
+                    break;
                 default:
                     throw new Exception($"Unexpected node {statement.Kind}");
             }
         }
+        
         private void EvaluateBlockStatement(BoundBlockStatement node)
         {
             foreach (var statement in node.Statements) 
@@ -53,6 +55,14 @@ namespace Demian.CodeAnalysis
             var value = EvaluateExpression(node.Initializer);
             _variables[node.Variable] = value;
             _lastValue = value;
+        }
+        private void EvaluateIfStatement(BoundIfStatement statement)
+        {
+            var conditionValue = (bool)EvaluateExpression(statement.Condition);
+            if (conditionValue)
+                EvaluateStatement(statement.ThenStatement);
+            else if (statement.ElseStatement != null)
+                EvaluateStatement(statement.ElseStatement);
         }
         private object EvaluateExpression(BoundExpression node)
         {

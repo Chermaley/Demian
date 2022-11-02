@@ -67,7 +67,9 @@ namespace Demian.CodeAnalysis.Syntax
                     return ParseBlockStatement();
                 case SyntaxKind.LetKeyword:
                 case SyntaxKind.VarKeyword:
-                    return ParseVariableDeclaration();
+                    return ParseVariableDeclaration();  
+                case SyntaxKind.IfKeyword:
+                    return ParseIfStatement();
                 default:
                     return ParseExpressionStatement();
             }
@@ -102,6 +104,25 @@ namespace Demian.CodeAnalysis.Syntax
             return new ExpressionStatementSyntax(expression);
             
         }
+        private StatementSyntax ParseIfStatement()
+        {
+            var ifKeyword = MatchToken(SyntaxKind.IfKeyword);
+            var condition = ParseExpression();
+            var statement = ParseStatement();
+            var elseClause = ParseElseClause();
+            return new IfStatementSyntax(ifKeyword, condition, statement, elseClause);
+            
+        }
+
+        private ElseClauseStatement ParseElseClause()
+        {
+            if (Current.Kind != SyntaxKind.ElseKeyword)
+                return null;
+            var elseKeyword = NextToken();
+            var statement = ParseStatement();
+            return new ElseClauseStatement(elseKeyword, statement);
+        }
+
         private ExpressionSyntax ParseExpression()
         {
             return ParseAssigmentExpression();

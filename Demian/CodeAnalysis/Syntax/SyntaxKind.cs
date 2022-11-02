@@ -39,6 +39,8 @@ public enum SyntaxKind
     FalseKeyword,
     LetKeyword,
     VarKeyword,
+    IfKeyword,
+    ElseKeyword,
     
     //Nodes 
     CompilationUnit,
@@ -47,5 +49,5 @@ public enum SyntaxKind
     BlockStatement,
     ExpressionStatement,
     VariableDeclaration,
-
+    IfStatement,
 } 

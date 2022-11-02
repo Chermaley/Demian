@@ -6,6 +6,8 @@ public enum BoundNodeKind
     BlockStatement,
     ExpressionStatement,
     VariableDeclaration,
+    IfStatement,
+    
     //Expressions
     UnaryExpression,
     LiteralExpression,

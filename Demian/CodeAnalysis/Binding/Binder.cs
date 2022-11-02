@@ -57,6 +57,8 @@ namespace Demian.CodeAnalysis.Binding
                     return BindExpressionStatement((ExpressionStatementSyntax)syntax);             
                 case SyntaxKind.VariableDeclaration:
                     return BindVariableDeclaration((VariableDeclarationSyntax)syntax);
+                case SyntaxKind.IfStatement:
+                    return BindIfStatement((IfStatementSyntax)syntax);
                 default:
                     throw new Exception($"Unexpected syntax {syntax.Kind}");
             }
@@ -93,6 +95,23 @@ namespace Demian.CodeAnalysis.Binding
             
             return new BoundVariableDeclaration(variable, expression);
         }
+        private BoundStatement BindIfStatement(IfStatementSyntax syntax)
+        {
+            var condition = BindExpression(syntax.Condition, typeof(bool));
+            var thenStatement = BindStatement(syntax.ThenStatement);
+            var elseStatement = syntax.ElseClause == null ? null : BindStatement(syntax.ElseClause.ElseStatement);
+            
+            return new BoundIfStatement(condition, thenStatement, elseStatement);
+        }
+
+        private BoundExpression BindExpression(ExpressionSyntax syntax, Type targetType)
+        {
+            var result = BindExpression(syntax);
+            if (result.Type != targetType) 
+                _diagnostics.ReportVariableCannotConvert(syntax.Span, result.Type, targetType);
+            return result;
+        }
+
         private BoundExpression BindExpression(ExpressionSyntax syntax)
         {
             switch (syntax.Kind) 
