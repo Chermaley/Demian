@@ -80,6 +80,8 @@ public static class SyntaxFacts
                 return SyntaxKind.IfKeyword;  
             case "else":
                 return SyntaxKind.ElseKeyword;
+            case "while":
+                return SyntaxKind.WhileKeyword;
             default:
                 return SyntaxKind.IdentifierToken;
         }
@@ -137,6 +139,8 @@ public static class SyntaxFacts
                 return "let";
             case SyntaxKind.VarKeyword:
                 return "var";
+            case SyntaxKind.WhileKeyword:
+                return "while";
             default:
                 return null;
         }

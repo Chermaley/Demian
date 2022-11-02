@@ -41,6 +41,7 @@ public enum SyntaxKind
     VarKeyword,
     IfKeyword,
     ElseKeyword,
+    WhileKeyword,
     
     //Nodes 
     CompilationUnit,
@@ -50,4 +51,5 @@ public enum SyntaxKind
     ExpressionStatement,
     VariableDeclaration,
     IfStatement,
+    WhileStatement
 } 

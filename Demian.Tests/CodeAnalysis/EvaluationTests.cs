@@ -47,6 +47,7 @@ public class EvaluationTests
         [InlineData("{ var a = 0 if a == 4 a = 10 a }", 0)]
         [InlineData("{ var a = 0 if a == 0 a = 10 else a = 5 a }", 10)]
         [InlineData("{ var a = 0 if a == 4 a = 10 else a = 5 a }", 5)]
+        [InlineData("{ var i = 10 var result = 0 while i > 0 { result = result + i i = i - 1} result }", 55)]
         public void SyntaxFact_BinaryOperator_RoundTrips(string text, object expectedValue)
         {
             var syntaxTree = SyntaxTree.Parse(text);
@@ -56,6 +57,23 @@ public class EvaluationTests
 
             Assert.Empty(result.Diagnostics);
             Assert.Equal(result.Value, expectedValue);
+        }
+        [Fact]
+        public void Evaluator_WhileStatement_Reports_CannotConvert()
+        {
+            var text = @"
+                {
+                    var x = 0
+                    while [10]
+                        x = 10
+                }
+            ";
+
+            var diagnostics = @"
+                Variable type 'System.Int32' is not assignable to 'System.Boolean'.
+            ";
+
+            AssertDiagnostics(text, diagnostics);
         }
         [Fact]
         public void Evaluator_IfStatement_Reports_CannotConvert()

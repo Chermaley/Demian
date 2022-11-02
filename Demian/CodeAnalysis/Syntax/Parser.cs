@@ -70,11 +70,12 @@ namespace Demian.CodeAnalysis.Syntax
                     return ParseVariableDeclaration();  
                 case SyntaxKind.IfKeyword:
                     return ParseIfStatement();
+                case SyntaxKind.WhileKeyword:
+                    return ParseWhileStatement();
                 default:
                     return ParseExpressionStatement();
             }
         }
-        
         private BlockStatementSyntax ParseBlockStatement()
         {
             var statements = ImmutableArray.CreateBuilder<StatementSyntax>();
@@ -113,7 +114,6 @@ namespace Demian.CodeAnalysis.Syntax
             return new IfStatementSyntax(ifKeyword, condition, statement, elseClause);
             
         }
-
         private ElseClauseStatement ParseElseClause()
         {
             if (Current.Kind != SyntaxKind.ElseKeyword)
@@ -122,7 +122,13 @@ namespace Demian.CodeAnalysis.Syntax
             var statement = ParseStatement();
             return new ElseClauseStatement(elseKeyword, statement);
         }
-
+        private StatementSyntax ParseWhileStatement()
+        {
+            var whileKeyword = MatchToken(SyntaxKind.WhileKeyword);
+            var condition = ParseExpression();
+            var body = ParseStatement();
+            return new WhileStatement(whileKeyword, condition, body);
+        }
         private ExpressionSyntax ParseExpression()
         {
             return ParseAssigmentExpression();

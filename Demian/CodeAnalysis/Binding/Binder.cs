@@ -59,6 +59,8 @@ namespace Demian.CodeAnalysis.Binding
                     return BindVariableDeclaration((VariableDeclarationSyntax)syntax);
                 case SyntaxKind.IfStatement:
                     return BindIfStatement((IfStatementSyntax)syntax);
+                case SyntaxKind.WhileStatement:
+                    return BindWhileStatement((WhileStatement)syntax);
                 default:
                     throw new Exception($"Unexpected syntax {syntax.Kind}");
             }
@@ -103,7 +105,13 @@ namespace Demian.CodeAnalysis.Binding
             
             return new BoundIfStatement(condition, thenStatement, elseStatement);
         }
+        private BoundStatement BindWhileStatement(WhileStatement syntax)
+        {
+            var condition = BindExpression(syntax.Condition, typeof(bool));
+            var statement = BindStatement(syntax.Statement);
 
+            return new BoundWhileStatement(condition, statement);
+        }
         private BoundExpression BindExpression(ExpressionSyntax syntax, Type targetType)
         {
             var result = BindExpression(syntax);
