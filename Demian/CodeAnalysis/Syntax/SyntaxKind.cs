@@ -25,7 +25,11 @@ public enum SyntaxKind
     LessOrEqualsToken,
     GreaterToken,
     GreaterOrEqualsToken,
-    
+    TildeToken,
+    AmpersandToken,
+    PipeToken,
+    HatToken,
+
     //Expressions 
     UnaryExpression,
     LiteralExpression,
