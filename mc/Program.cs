@@ -12,6 +12,7 @@ namespace Compiller
         {
             var variables = new Dictionary<VariableSymbol, object>();
             var showTree = false;
+            var showProgramm = false;
             var textBuilder = new StringBuilder();
             Compilation previous = null;
             
@@ -37,6 +38,13 @@ namespace Compiller
                     {
                         showTree = !showTree;
                         Console.WriteLine(showTree ? "Showing parse trees" : "Not showing parse trees");
+                        continue;
+                    }
+                    
+                    if (input == "#showProgram")
+                    {
+                        showProgramm = !showProgramm;
+                        Console.WriteLine(showProgramm ? "Showing bound trees" : "Not showing bound trees");
                         continue;
                     }
                 
@@ -68,13 +76,11 @@ namespace Compiller
                 var result = compilation.Evaluate(variables);
                 
                 if (showTree)
-                {
-                    Console.ForegroundColor = ConsoleColor.DarkGray;
                     syntaxTree.Root.WriteTo(Console.Out);
-                    Console.ResetColor();
-
-                }
-
+                
+                if (showProgramm)
+                    compilation.EmitTree(Console.Out);
+                
                 if (result.Diagnostics.Any())
                 {
                     Console.ForegroundColor = ConsoleColor.DarkRed;
